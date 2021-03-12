@@ -25,6 +25,7 @@ public class JZ6 {
                 right = mid;
             }
             // mid位置和右边界值相等，无法判断，逐步缩小
+            // 比如10111、11101
             else{
                 right--;
             }
