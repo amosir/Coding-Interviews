@@ -9,6 +9,7 @@ public class JZ7 {
         if(n == 0 || n == 1){
             return n;
         }
+        // 分别记录前面的两个数
         int formerOne = 1,formerTwo = 0,temp;
         for(int i = 2;i <= n;i++){
             temp = formerTwo + formerOne;
