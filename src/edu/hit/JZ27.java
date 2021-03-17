@@ -1,6 +1,5 @@
 package edu.hit;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -15,42 +14,45 @@ public class JZ27 {
 
     public ArrayList<String> Permutation(String str) {
         // 边界情况
-        if(str == null || str.length() == 0){
+        if (str == null || str.length() == 0) {
             return new ArrayList<>(0);
         }
         // 初始化标记数组
         visited = new boolean[str.length()];
 
-        // 排序
-        char[] chs = str.toCharArray();
-        Arrays.sort(chs);
-
-        // 返回结果
+        // 先放到集合进行去重
         Set<String> retSet = new HashSet<>();
 
-
         // 递归回溯求全排列
-        helper(0,new String(chs),retSet);
+        helper(0, str, retSet);
 
         ArrayList ret = new ArrayList(retSet);
+
+        // 按字典序排序
         Collections.sort(ret);
 
 
         return ret;
     }
 
-    private void helper(int pos,String str,Set<String> result){
-        if(pos == str.length()){
+    private void helper(int pos, String str, Set<String> result) {
+
+        // 构成一个排列
+        if (pos == str.length()) {
             result.add(tempStr.toString());
             return;
         }
 
-        for(int i = 0;i < str.length();i ++){
-            if(visited[i] == false){
+        for (int i = 0; i < str.length(); i++) {
+            if (visited[i] == false) {
+                // 标记已访问
                 visited[i] = true;
                 tempStr.append(str.charAt(i));
-                helper(pos + 1,str,result);
+                helper(pos + 1, str, result);
+                // 取消标记
                 visited[i] = false;
+
+                // 删除append的字符
                 tempStr.deleteCharAt(tempStr.length() - 1);
             }
         }
