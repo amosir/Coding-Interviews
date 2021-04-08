@@ -1,5 +1,7 @@
 package edu.hit;
 
+import java.util.HashMap;
+
 /**
  * 线索化二叉树
  */
@@ -20,6 +22,7 @@ public class JZ61 {
     }
 
     String Serialize(TreeNode root) {
+
         if(root == null){
             return "#";
         }else{
