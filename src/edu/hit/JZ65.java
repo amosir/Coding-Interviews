@@ -9,20 +9,16 @@ package edu.hit;
 public class JZ65 {
 
     // 访问标记数组
-    private boolean[] visited;
+    private boolean[][] visited;
 
-    /**
-     * @param matrix string字符串
-     * @param rows   int整型
-     * @param cols   int整型
-     * @param str    string字符串
-     * @return bool布尔型
-     */
-    public boolean hasPath(String matrix, int rows, int cols, String str) {
-        visited = new boolean[matrix.length()];
+    public boolean hasPath (char[][] matrix, String word) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+
+        visited = new boolean[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                if (judge(matrix, str, rows, cols, i, j, 0, visited)) {
+                if (judge(matrix, word, rows, cols, i, j, 0, visited)) {
                     return true;
                 }
             }
@@ -30,40 +26,39 @@ public class JZ65 {
         return false;
     }
 
-    private boolean judge(String matrix, String str, int rows, int cols, int rowIndex, int colIndex, int indexInStr, boolean[] visited) {
 
-        // 当前矩阵字符串的访问位置
-        int indexInMatrix = rowIndex * cols + colIndex;
+    private boolean judge(char[][] matrix, String word, int rows, int cols, int rowIndex, int colIndex, int indexInWord, boolean[][] visited) {
 
         // 不匹配的情况
         if (rowIndex < 0 || colIndex < 0 || rowIndex >= rows ||
-                colIndex >= cols || visited[indexInMatrix] == true ||
-                matrix.charAt(indexInMatrix) != str.charAt(indexInStr)) {
+                colIndex >= cols || visited[rowIndex][colIndex] == true ||
+                matrix[rowIndex][colIndex] != word.charAt(indexInWord)) {
             return false;
         }
 
         // 标记为已访问
-        visited[indexInMatrix] = true;
+        visited[rowIndex][colIndex] = true;
 
-        if(indexInStr == str.length() - 1){
+        if(indexInWord == word.length() - 1){
             return true;
         }
 
         // 判断上下左右四个方向
-        if(judge(matrix,str,rows,cols,rowIndex - 1,colIndex,indexInStr + 1,visited) ||
-                judge(matrix,str,rows,cols,rowIndex + 1,colIndex,indexInStr + 1,visited) ||
-                judge(matrix,str,rows,cols,rowIndex,colIndex - 1,indexInStr + 1,visited) ||
-                judge(matrix,str,rows,cols,rowIndex,colIndex + 1,indexInStr + 1,visited)){
+        if(judge(matrix,word,rows,cols,rowIndex - 1,colIndex,indexInWord + 1,visited) ||
+                judge(matrix,word,rows,cols,rowIndex + 1,colIndex,indexInWord + 1,visited) ||
+                judge(matrix,word,rows,cols,rowIndex,colIndex - 1,indexInWord + 1,visited) ||
+                judge(matrix,word,rows,cols,rowIndex,colIndex + 1,indexInWord + 1,visited)){
             return true;
         }
 
         // 重置为未访问
-        visited[indexInMatrix] = false;
+        visited[rowIndex][colIndex] = false;
         return false;
     }
 
     public static void main(String[] args) {
         JZ65 jz65 = new JZ65();
-        System.out.println(jz65.hasPath("ABCESFCSADEE",3,4,"SEE"));
+        char[][] ch = {{'a','b','c','e'},{'s','f','c','s'},{'a','d','e','e'}};
+        System.out.println(jz65.hasPath(ch,"abcced"));
     }
 }
