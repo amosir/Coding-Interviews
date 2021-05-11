@@ -64,7 +64,6 @@ public class JZ59 {
                 if(temp.left!=null){
                     oddLayerNodes.add(temp.left);
                 }
-
                 curLayerVals.add(temp.val);
             }
             if(!curLayerVals.isEmpty()){
